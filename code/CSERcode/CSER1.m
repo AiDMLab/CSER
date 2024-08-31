@@ -1,36 +1,33 @@
 % *************************************************************************
-% CMI2NI: Conditional mutual inclusive information(CMI2)-based Network
 % Inference method from gene expression data  
 % *************************************************************************
 % This is matlab code for netwrk inference method CMI2NI. 
-% Input: ÊäÈë
+% Input: è¾“å…¥
 % 'data' is expression of variable,in which row is varible and column is the sample;
-% 'data'µÄĞĞÊÇ»ùÒò ÁĞÊÇÑù±¾
+% 'data'çš„è¡Œæ˜¯åŸºå›  åˆ—æ˜¯æ ·æœ¬
 % 'lamda' is the parameter decide the dependence;
-% 'lamda'ÊÇ¾ö¶¨¶ÀÁ¢ĞÔµÄ²ÎÊı
+% 'lamda'æ˜¯å†³å®šç‹¬ç«‹æ€§çš„å‚æ•°
 % 'order0' is the parameter to end the program when order=order0;
-% 'order0'ÊÇ½áÊø³ÌĞòµÄ²ÎÊı,µ±order=order0Ê± ½áÊø³ÌĞò
+% 'order0'æ˜¯ç»“æŸç¨‹åºçš„å‚æ•°,å½“order=order0æ—¶ ç»“æŸç¨‹åº
 % If nargin==2,the algorithm will be terminated untill there is no change 
 % in network toplogy.
-% Èç¹ûnargin==2,Ö±µ½ÍøÂçÍØÆËÃ»ÓĞ±ä»¯ ³ÌĞò²Å»á½áÊø
-% Output: Êä³ö
+% å¦‚æœnargin==2,ç›´åˆ°ç½‘ç»œæ‹“æ‰‘æ²¡æœ‰å˜åŒ– ç¨‹åºæ‰ä¼šç»“æŸ
+% Output: è¾“å‡º
 % 'G' is the 0-1 network or graph after pc algorithm;
-% 'G'ÊÇpcËã·¨ºóµÄ0-1ÍøÂç»òÍ¼ĞÎ
+% 'G'æ˜¯pcç®—æ³•åçš„0-1ç½‘ç»œæˆ–å›¾å½¢
 % 'Gval' is the network with strenthness of dependence;
-% 'Gval'ÊÇ¾ßÓĞÒÀÀµĞÔÇ¿¶ÈµÄÍøÂç
+% 'Gval'æ˜¯å…·æœ‰ä¾èµ–æ€§å¼ºåº¦çš„ç½‘ç»œ
 % 'order' is the order of the pc algorithm, here is equal to order0;
-% 'order'ÊÇpcËã·¨µÄ½×Êı,ÕâÀïµÈÓÚorder0
+% 'order'æ˜¯pcç®—æ³•çš„é˜¶æ•°,è¿™é‡Œç­‰äºorder0
 % Example:
 % 
-% Author: Xiujun Zhang.
-% Version: Sept.2014.
 
 function [G,Gval,order]=CMI2NI(data,lamda,order0)                                                 
-n_gene=size(data,1);% n_geneÊÇ»ùÒòµÄÊıÁ¿
-G=ones(n_gene,n_gene);% GÊÇÔªËØÈ«Îª1µÄ¾ØÕó
-G=tril(G,-1)';% tril(G,-1)ÌáÈ¡Ö÷¶Ô½ÇÏßÏÂ·½µÄÔªËØ,È»ºó×ªÖÃ
-G=G+G';%G Ö÷¶Ô½ÇÎª0,ÆäÓàÔªËØÎª1µÄ¾ØÕó
-Gval=G;%Gval Ö÷¶Ô½ÇÏßµÄÔªËØÎª0,ÆäÓàÔªËØÎª1µÄ¾ØÕó
+n_gene=size(data,1);% n_geneæ˜¯åŸºå› çš„æ•°é‡
+G=ones(n_gene,n_gene);% Gæ˜¯å…ƒç´ å…¨ä¸º1çš„çŸ©é˜µ
+G=tril(G,-1)';% tril(G,-1)æå–ä¸»å¯¹è§’çº¿ä¸‹æ–¹çš„å…ƒç´ ,ç„¶åè½¬ç½®
+G=G+G';%G ä¸»å¯¹è§’ä¸º0,å…¶ä½™å…ƒç´ ä¸º1çš„çŸ©é˜µ
+Gval=G;%Gval ä¸»å¯¹è§’çº¿çš„å…ƒç´ ä¸º0,å…¶ä½™å…ƒç´ ä¸º1çš„çŸ©é˜µ
 order=-1;t=0;
 while t==0
      order=order+1;%order=-1+1=0
@@ -40,7 +37,7 @@ while t==0
            return
        end
      end
-    [G,Gval,t]=edgereduce(G,Gval,order,data,t,lamda);%²úÉúÈ¨ÖØ¾ØÕó
+    [G,Gval,t]=edgereduce(G,Gval,order,data,t,lamda);%äº§ç”Ÿæƒé‡çŸ©é˜µ
  
      if t==0
           disp('No edge is reduce! Algorithm  finished!');
@@ -54,44 +51,44 @@ end
 
 %% edgereduce  
 function [G,Gval,t]=edgereduce(G,Gval,order,data,t,lamda)
-G0=G;% G0 Ö÷¶Ô½ÇÏßÔªËØÎª0 ÆäÓàÔªËØÎª1µÄ¾ØÕó
+G0=G;% G0 ä¸»å¯¹è§’çº¿å…ƒç´ ä¸º0 å…¶ä½™å…ƒç´ ä¸º1çš„çŸ©é˜µ
 %[nrow,ncol]=find(G~=0);
 if order==0
-    for i=1:size(G,1)%»ùÒòÑ­»·
-        for j=1:size(G,1)%»ùÒòÑ­»·
-            if G(i,j)~=0%Èç¹ûG(i,j)²»µÈÓÚ0
-                cmiv=cmi(data(i,:),data(j,:));%¼ÆËãµÚi¸ö»ùÒòºÍµÚj¸ö»ùÒòÖ®¼äµÄÌõ¼ş»¥ĞÅÏ¢
-                Gval(i,j)=cmiv;  Gval(j,i)=cmiv;%Gval¾ØÕóÔªËØÎªCMIÖµ
+    for i=1:size(G,1)%åŸºå› å¾ªç¯
+        for j=1:size(G,1)%åŸºå› å¾ªç¯
+            if G(i,j)~=0%å¦‚æœG(i,j)ä¸ç­‰äº0
+                cmiv=cmi(data(i,:),data(j,:));%è®¡ç®—ç¬¬iä¸ªåŸºå› å’Œç¬¬jä¸ªåŸºå› ä¹‹é—´çš„æ¡ä»¶äº’ä¿¡æ¯
+                Gval(i,j)=cmiv;  Gval(j,i)=cmiv;%GvalçŸ©é˜µå…ƒç´ ä¸ºCMIå€¼
                 if cmiv<lamda
-                    G(i,j)=0;G(j,i)=0;%Èç¹û»¥ĞÅÏ¢Ğ¡ÓÚãĞÖµ,¾ØÕóGµÄ¶ÔÓ¦ÔªËØÎª0
+                    G(i,j)=0;G(j,i)=0;%å¦‚æœäº’ä¿¡æ¯å°äºé˜ˆå€¼,çŸ©é˜µGçš„å¯¹åº”å…ƒç´ ä¸º0
                 end
             end
         end
     end
           t=t+1;
 else
-  for i=1:size(G,1)%»ùÒòÑ­»·
-      for j=1:size(G,1)%»ùÒòÑ­»·
-          if G(i,j)~=0%µ±G(i,j)²»µÈÓÚ0Ê±,¼´»¥ĞÅÏ¢´óÓÚãĞÖµ
+  for i=1:size(G,1)%åŸºå› å¾ªç¯
+      for j=1:size(G,1)%åŸºå› å¾ªç¯
+          if G(i,j)~=0%å½“G(i,j)ä¸ç­‰äº0æ—¶,å³äº’ä¿¡æ¯å¤§äºé˜ˆå€¼
               adj=[] ;
               for k=1:size(G,1)
                   if G(i,k)~=0 && G(j,k)~=0
-                      adj=[adj,k];%¼ÇÂ¼ÏÂÓëiºÍj¶¼Á¬½ÓµÄ»ùÒò
+                      adj=[adj,k];%è®°å½•ä¸‹ä¸iå’Œjéƒ½è¿æ¥çš„åŸºå› 
                   end
               end
-              if size(adj,2)>=order%size(adj,2)¼´ÎÄÖĞµÄL,´Ë´¦ÅĞ¶Ï¹²Í¬Á¬½Ó»ùÒòÊıÄ¿ÊÇ·ñ´óÓÚ½×Êı
-                   combntnslist=combntns(adj,order);%combntns(x,m)ÁĞ¾Ù´Ón¸öÔªËØÖĞÈ¡³öm¸öÔªËØµÄ×éºÏ,xÊÇº¬ÓĞn¸öÔªËØµÄÏòÁ¿
+              if size(adj,2)>=order%size(adj,2)å³æ–‡ä¸­çš„L,æ­¤å¤„åˆ¤æ–­å…±åŒè¿æ¥åŸºå› æ•°ç›®æ˜¯å¦å¤§äºé˜¶æ•°
+                   combntnslist=combntns(adj,order);%combntns(x,m)åˆ—ä¸¾ä»nä¸ªå…ƒç´ ä¸­å–å‡ºmä¸ªå…ƒç´ çš„ç»„åˆ,xæ˜¯å«æœ‰nä¸ªå…ƒç´ çš„å‘é‡
                    combntnsrow=size(combntnslist,1);   
                    cmiv=0;
                    v1=data(i,:);v2=data(j,:);
                    for k=1:combntnsrow   
                      vcs=data(combntnslist(k,:),:);   
-                     a=MI2(v1,v2,vcs) ;%¼ÆËãCMI2
-                     cmiv=max(cmiv,a);%È¡×î´óµÄÄÇ¸öCMI2
+                     a=MI2(v1,v2,vcs) ;%è®¡ç®—CMI2
+                     cmiv=max(cmiv,a);%å–æœ€å¤§çš„é‚£ä¸ªCMI2
                    end
-                   Gval(i,j)=cmiv; Gval(j,i)=cmiv;%Gval¾ØÕóµÄÖµ¸üĞÂÎªCMI2µÄÖµ
+                   Gval(i,j)=cmiv; Gval(j,i)=cmiv;%GvalçŸ©é˜µçš„å€¼æ›´æ–°ä¸ºCMI2çš„å€¼
                    if cmiv<lamda
-                         G(i,j)=0; G(j,i)=0;%CMI2ºÍãĞÖµlamda±È½Ï
+                         G(i,j)=0; G(j,i)=0;%CMI2å’Œé˜ˆå€¼lamdaæ¯”è¾ƒ
                    end              
                    t=t+1; 
               end
@@ -109,16 +106,16 @@ end
 %% compute conditional mutual information of x and y 
 function cmiv=cmi(v1,v2,vcs)
  if  nargin==2
-        c1=det(cov(v1));%covÇóĞ­·½²î,detÇóĞĞÁĞÊ½
+        c1=det(cov(v1));%covæ±‚åæ–¹å·®,detæ±‚è¡Œåˆ—å¼
         c2=det(cov(v2));
         c3=det(cov(v1,v2));
-        cmiv=0.5*log(c1*c2/c3);%ÎÄÖĞµÈÊ½2 ¼ÆËã»¥ĞÅÏ¢ 
+        cmiv=0.5*log(c1*c2/c3);%æ–‡ä¸­ç­‰å¼2 è®¡ç®—äº’ä¿¡æ¯ 
      elseif  nargin==3
         c1=det(cov([v1;vcs]'));
         c2=det(cov([v2;vcs]'));
         c3=det(cov(vcs'));
         c4=det(cov([v1;v2;vcs]'));
-        cmiv=0.5*log((c1*c2)/(c3*c4));%ÎÄÖĞµÈÊ½4 ¼ÆËãÌõ¼ş»¥ĞÅÏ¢       
+        cmiv=0.5*log((c1*c2)/(c3*c4));%æ–‡ä¸­ç­‰å¼4 è®¡ç®—æ¡ä»¶äº’ä¿¡æ¯       
  end
     % cmiv=abs(cmiv);
      if  cmiv==inf 
@@ -126,9 +123,9 @@ function cmiv=cmi(v1,v2,vcs)
      end
 end
 
-% Conditional mutul inclusive information (CMI2)¼ÆËãCMI2
+% Conditional mutul inclusive information (CMI2)è®¡ç®—CMI2
 function r_dmi = MI2(x,y,z)
-r_dmi = (cas(x,y,z) + cas(y,x,z))/2;%ÎÄÖĞµÈÊ½7 µÈÊ½10
+r_dmi = (cas(x,y,z) + cas(y,x,z))/2;%æ–‡ä¸­ç­‰å¼7 ç­‰å¼10
 end
 
 % x and y are 1*m dimensional vector; z is n1*m dimensional.
@@ -138,11 +135,11 @@ function CS = cas(x,y,z)
 n1 = size(z,1);
 n = n1 +2;
 
-Cov = cov(x);%covÇóĞ­·½²î
+Cov = cov(x);%covæ±‚åæ–¹å·®
 Covm = cov([x;y;z]');
 Covm1 = cov([x;z]');
 
-InvCov = inv(Cov);%invÊÇÇó¾ØÕóµÄÄæ
+InvCov = inv(Cov);%invæ˜¯æ±‚çŸ©é˜µçš„é€†
 InvCovm = inv(Covm);
 InvCovm1 = inv(Covm1);
 
@@ -156,6 +153,6 @@ InvC = [[C11,C12,C13];[C12,C22,C23];[[C13',C23'],C33]];%C
 % C = inv(InvC);  
 
 C0 = Cov(1,1) * (InvCovm(1,1) - InvCovm1(1,1) + InvCov(1,1));%C0
-CS = 0.5 * (trace(InvC*Covm)+log(C0)-n) ;%µÈÊ½10µÄ1/2
+CS = 0.5 * (trace(InvC*Covm)+log(C0)-n) ;%ç­‰å¼10çš„1/2
  
 end
