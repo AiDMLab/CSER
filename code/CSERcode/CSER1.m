@@ -1,7 +1,7 @@
 % *************************************************************************
 % Inference method from gene expression data  
 % *************************************************************************
-% This is matlab code for netwrk inference method CMI2NI. 
+% This is matlab code for netwrk inference. 
 % Input: 输入
 % 'data' is expression of variable,in which row is varible and column is the sample;
 % 'data'的行是基因 列是样本
